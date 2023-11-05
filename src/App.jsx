@@ -17,7 +17,7 @@ function App() {
     event.preventDefault();
 
     // the API url we are going to make a request to
-    const API = `https://us1.locationiq.com/v1/search?q=${search}&key=${API_KEY}&format=json`;
+    const API = `https://eu1.locationiq.com/v1/search?q=${search}&key=${API_KEY}&format=json`;
 
     // make the GET request
     const res = await axios.get(API);
@@ -26,13 +26,9 @@ function App() {
     setLocation(res.data[0]);
   }
 
-  function handleNumber(mod) {
-    setNumber(number + mod);
-  }
-
   return (
     <>
-      <h1>APIs</h1>
+      <h1>City Explorer</h1>
       <form onSubmit={getLocation}>
         <input onChange={handleChange} placeholder="Location" />
         <button>Explore!</button>
@@ -40,10 +36,6 @@ function App() {
 
       {location.lat && (
         <div>
-          <button onClick={() => handleNumber(-1)}>-</button>
-          <span>{number}</span>
-          <button onClick={() => handleNumber(1)}>+</button>
-
           <img
             src={`https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=${number}&format=png`}
           />
@@ -51,6 +43,9 @@ function App() {
       )}
 
       <h2>{location.display_name}</h2>
+      <h2>
+        Latitude: {location.lat}, Longitude:{location.lon}
+      </h2>
     </>
   );
 }
